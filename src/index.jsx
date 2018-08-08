@@ -1,7 +1,7 @@
-import React from 'react';
-import {ReactiveComponent} from 'oo7-react';
-import {ss58_decode} from 'ss58';
-import {blake2b} from 'blakejs';
+const React = require('react')
+const {ReactiveComponent} = require('oo7-react')
+const {ss58_decode} = require('ss58')
+const {blake2b} = require('blakejs')
 
 const zero = blake2b(new Uint8Array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
 
