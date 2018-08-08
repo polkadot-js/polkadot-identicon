@@ -14,7 +14,7 @@ import Identicon from 'polkadot-identicon';
 ...
 render () {
 	// address is either string (ss58-encoded address) or Uint8Array (publicKey)
-  const { address } = this.props;
+	const { address } = this.props;
 	// size is a number, indicating the size (in pixels)
 	const size = 32;
 
