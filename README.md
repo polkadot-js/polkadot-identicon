@@ -6,7 +6,7 @@ A Polkadot-themed SS58 identicon
 
 To install the component, do `npm install --save polkadot-identicon`
 
-Inside a React component, you can now render ant Polkadot account with the associated icon -
+Inside a React component, you can now render any Polkadot account with the associated icon -
 
 ```js
 import Identicon from 'polkadot-identicon';
