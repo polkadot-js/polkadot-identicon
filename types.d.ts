@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type IdentityIconProps = {
+export type IdenticonProps = {
 	className?: string,
 	id: string | Uint8Array,
 	sixPoint?: boolean,
@@ -8,5 +8,5 @@ export type IdentityIconProps = {
 	style?: { [index: string]: any }
 };
 
-export default class Identicon extends React.Component<IdentityIconProps, {}> {
+export default class Identicon extends React.Component<IdenticonProps, {}> {
 }
