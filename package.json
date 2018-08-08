@@ -4,7 +4,8 @@
   "description": "A Polkadot-themed SS58 identicon Bonded React component",
   "main": "lib/index.js",
   "files": [
-    "lib/*"
+    "lib/*",
+    "types.d.ts"
   ],
   "scripts": {
     "compile": "babel --presets react -d lib/ src/",
@@ -27,6 +28,7 @@
     "url": "https://github.com/polkadot-js/polkadot-identicon/issues"
   },
   "homepage": "https://github.com/polkadot-js/polkadot-identicon#readme",
+  "types": "types.d.ts",
   "dependencies": {
     "blake2js": "^1.0.0",
     "oo7-react": "^0.4.9",
@@ -36,8 +38,6 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-react": "^6.24.1",
-    "chai": "^4.1.2",
-    "mocha": "^5.2.0",
     "watch": "^1.0.2"
   }
 }
