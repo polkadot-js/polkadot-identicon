@@ -58,10 +58,10 @@ export default class Identicon extends ReactiveComponent {
 				throw "Impossible"
 			}
 			
-			if (!this.state.id) {
+			let id = typeof this.state.id == 'string' ? ss58_decode(this.state.id) : this.state.id
+			if (!(typeof id == 'object' && id && id instanceof Uint8Array && id.length == 32)) {
 				return <svg width={s} height={s}/>
 			}
-			let id = typeof this.state.id == 'string' ? ss58_decode(this.state.id) : this.state.id
 			id = Array.from(blake2b(id)).map((x, i) => (x + 256 - zero[i]) % 256)
 
 			let sat = (Math.floor(id[29] * 70 / 256 + 26) % 80) + 30
