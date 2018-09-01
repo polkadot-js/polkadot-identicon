@@ -1,10 +1,19 @@
 const React = require('react')
 const {ReactiveComponent} = require('oo7-react')
-const {ss58_decode} = require('ss58')
+const {ss58_decode, ss58_encode} = require('ss58')
 const {blake2b} = require('blakejs')
 
 const zero = blake2b(new Uint8Array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
 
+const copyToClipboard = str => {
+	const el = document.createElement('textarea');
+	el.value = str;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+};
+ 
 export default class Identicon extends ReactiveComponent {
 	constructor () {
 		super(["id"])
@@ -34,11 +43,10 @@ export default class Identicon extends ReactiveComponent {
 			let z = s / 64 * 5
 			let schema = {
 				solid: { freq: 1, colors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] },
-				asterisk: { freq: 4, colors: [0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0] },
+				adidas: { freq: 4, colors: [0, 1, 0, 0, 1, 1, 2, 3, 2, 2, 3, 3, 4, 5, 4, 4, 5, 5, 6] },
 				cube: { freq: 16, colors: [0, 1, 3, 2, 4, 3, 0, 1, 3, 2, 4, 3, 0, 1, 3, 2, 4, 3, 5] },
 				quazar: { freq: 16, colors: [1, 2, 3, 1, 2, 4, 5, 5, 4, 1, 2, 3, 1, 2, 4, 5, 5, 4, 0] },
-				flower: { freq: 16, colors: [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3] },
-				adidas: { freq: 16, colors: [0, 1, 0, 0, 1, 1, 2, 3, 2, 2, 3, 3, 4, 5, 4, 4, 5, 5, 6] },
+				flower: { freq: 32, colors: [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 3] },
 				cyclic: { freq: 32, colors: [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6] },
 				vmirror: { freq: 128, colors: [0, 1, 2, 3, 4, 5, 3, 4, 2, 0, 1, 6, 7, 8, 9, 7, 8, 6, 10] },
 				hmirror: { freq: 128, colors: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 8, 6, 7, 5, 3, 4, 2, 11] }
@@ -62,6 +70,7 @@ export default class Identicon extends ReactiveComponent {
 			if (!(typeof id == 'object' && id && id instanceof Uint8Array && id.length == 32)) {
 				return <svg width={s} height={s}/>
 			}
+			let ss58 = ss58_encode(id);
 			id = Array.from(blake2b(id)).map((x, i) => (x + 256 - zero[i]) % 256)
 
 			let sat = (Math.floor(id[29] * 70 / 256 + 26) % 80) + 30
@@ -92,6 +101,7 @@ export default class Identicon extends ReactiveComponent {
 				style={this.props.style}
 				width={s}
 				height={s}
+				onClick={() => { copyToClipboard(ss58); this.props.onCopied && this.props.onCopied(ss58); }}
 			>
 				<circle cx={s / 2} cy={s / 2} r={s / 2} fill="#eee"/>
 				<circle cx={c} cy={c - r} r={z} fill={colors[i++]}/>
