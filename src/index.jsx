@@ -19,7 +19,7 @@ export default class Identicon extends ReactiveComponent {
 		super(["id"])
 	}
 	render () {
-		let s = this.props.size
+		let s = 64
 		let c = s / 2
 		let r = this.props.sixPoint ? s / 2 / 8 * 5 : (s / 2 / 4 * 3)
 		let rroot3o2 = r * Math.sqrt(3) / 2
@@ -55,7 +55,15 @@ export default class Identicon extends ReactiveComponent {
 		
 		let id = typeof this.state.id == 'string' ? ss58_decode(this.state.id) : this.state.id
 		if (!(typeof id == 'object' && id && id instanceof Uint8Array && id.length == 32)) {
-			return <svg width={s} height={s}/>
+			return <svg
+				id={this.props.id}
+				name={this.props.name}
+				className={this.props.className}
+				style={this.props.style}
+				width={this.props.width | this.props.size}
+				height={this.props.height | this.props.size}
+				viewBox='0 0 64 64'
+			/>
 		}
 		let ss58 = ss58_encode(id);
 		id = Array.from(blake2b(id)).map((x, i) => (x + 256 - zero[i]) % 256)
@@ -86,8 +94,9 @@ export default class Identicon extends ReactiveComponent {
 			name={this.props.name}
 			className={this.props.className}
 			style={this.props.style}
-			width={s}
-			height={s}
+			width={this.props.width | this.props.size}
+			height={this.props.height | this.props.size}
+			viewBox='0 0 64 64'
 			onClick={() => { copyToClipboard(ss58); this.props.onCopied && this.props.onCopied(ss58); }}
 		>
 			<circle cx={s / 2} cy={s / 2} r={s / 2} fill="#eee"/>
